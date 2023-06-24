@@ -86,11 +86,14 @@
 }
 
 .head_text {
+  @apply mt-5 text-4xl font-extrabold leading-[1] text-black sm:text-4xl;
+}
+.main_text {
   @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
 }
 
-.orange_gradient {
-  @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
+.violet_gradient {
+  @apply bg-gradient-to-r from-violet-500 via-blue-600 to-pink-500 bg-clip-text text-transparent;
 }
 
 .green_gradient {
