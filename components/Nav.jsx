@@ -8,12 +8,14 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Nav = () => {
 //   const isUserLoggedIn = true;
     const {data: session} = useSession();
+    
 const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   useEffect(()=>{
     const setProvider = async()=>{
         let response = await getProviders();
+        console.log(response);
         setProviders(response);
     }
     setProvider()
@@ -63,6 +65,7 @@ const [providers, setProviders] = useState(null);
           <>
             {providers && Object.values(providers)
             .map((provider)=>(
+              console.log(provider),
                 <button
                     type="button"
                     className="black_btn"
