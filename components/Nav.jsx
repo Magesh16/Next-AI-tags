@@ -15,7 +15,7 @@ const [providers, setProviders] = useState(null);
   useEffect(()=>{
     const setProvider = async()=>{
         let response = await getProviders();
-        console.log(response);
+        // console.log(response);
         setProviders(response);
     }
     setProvider()
