@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
@@ -20,8 +19,9 @@ const MyProfile = () => {
             console.log("err"+err);
           }
         };
-        if(session?.user.id) fetchPosts();
-      }, []);
+        if(session?.user.id) fetchPosts(); 
+      }, [session?.user.id]);
+
     const handleEdit = (post)=>{
         console.log(post);
         Router.push(`/update-prompt?id=${post._id}`)
@@ -43,7 +43,7 @@ const MyProfile = () => {
     }
   return (
     <Profile
-        name ={session.user.name}
+        name ={session?.user.name}
         desc ="Welcome to your personalized profile"
         data ={posts}
         handleEdit ={handleEdit}
