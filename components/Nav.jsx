@@ -26,11 +26,11 @@ const [providers, setProviders] = useState(null);
         {/* Desktop Navigation */}
       <Link href="/" className="flex gap-2 flex-center">
         <Image
-          src="assets/images/logo.svg"
+          src="/assets/images/logo.png"
           alt="next-ai"
-          width={30}
-          height={30}
-          className="object-contain"
+          width={40}
+          height={40}
+          className="object-contain rounded-full"
         />
         <p className="logo_text">NEXT-AI</p>
       </Link>
@@ -40,7 +40,7 @@ const [providers, setProviders] = useState(null);
           <div className="flex gap-3 md:gap-5">
             <Link
              href="/create-prompt"
-             className="black_btn">
+             className="gradient_btn">
               Create Post
             </Link>
             <button 
@@ -68,7 +68,7 @@ const [providers, setProviders] = useState(null);
               console.log(provider),
                 <button
                     type="button"
-                    className="black_btn"
+                    className="gradient_btn"
                     key = {provider.name}
                     onClick = {()=> signIn(provider.id)}
                     > Sign In

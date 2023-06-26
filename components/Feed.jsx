@@ -1,33 +1,46 @@
 "use client"
 import {useState, useEffect} from 'react';
 import PromptCard from './PromptCard';
-import axios from 'axios';
 
-
+const PromptCardList = ({ data, handleTagClick }) => {
+  return (
+    <div className='mt-16 prompt_layout'>
+      {data.map((post) => (
+        <PromptCard
+          key={post._id}
+          post={post}
+          handleTagClick={handleTagClick}
+        />
+      ))}
+    </div>
+  );
+};
 const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [allPosts ,setAllPosts] = useState([]);
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchedResults, setSearchedResults] = useState([]);
 
-  const handleSearchChange = async()=>{
-
+  const filterResults = (searchText)=>{
+    const regex = new RegExp(searchText, "i");
+    return allPosts.filter((item) => regex.test(item.userId.username) || regex.test(item.prompt) || regex.test(item.tag))
   }
-  const handleTagClick = ()=>{
 
+  const handleSearchChange = async(e)=>{
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value)
+    setSearchTimeout(
+      setTimeout(()=>{
+        const typedSearch = filterResults(e.target.value);
+        setSearchedResults(typedSearch);
+      },500)
+    )
   }
-  const PromptCardList = ({ data, handleTagClick }) => {
-    return (
-      <div className='mt-16 prompt_layout'>
-        {data.map((post) => (
-          <PromptCard
-            key={post._id}
-            post={post}
-            handleTagClick={handleTagClick}
-          />
-        ))}
-      </div>
-    );
-  };
-
+  const handleTagClick = (tagName)=>{
+    // const searchResult = filterResults(tagName);
+    // setSearchedResults(searchResult);
+    // setSearchText(searchResult)
+  }
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -42,12 +55,14 @@ const Feed = () => {
     fetchPosts();
   }, []);
 
+
+
   return (
     <section className='feed'>
       <form className='relative w-full flex-center'>
         <input
           type='text'
-          placeholder='Search for a tag or a username'
+          placeholder='Search for a hashtag or username'
           value={searchText}
           onChange={handleSearchChange}
           required
@@ -55,10 +70,14 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList
-        data ={allPosts}
-        handleTagClick = {handleTagClick}
-      />
+      {searchText ? (
+        <PromptCardList
+          data={searchedResults}
+          handleTagClick={handleTagClick}
+        />
+      ) : (
+        <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
+      )}
 
       </section>
   )

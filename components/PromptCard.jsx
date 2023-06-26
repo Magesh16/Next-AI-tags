@@ -1,8 +1,7 @@
 "use client";
 import Image from "next/image";
-import { Session } from "next-auth";
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
@@ -10,7 +9,6 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const [copied, setCopied] = useState();
   const {data:session} = useSession();
   const pathName = usePathname();
-  const router = useRouter();
 
   const handleCopy = ()=>{
     setCopied(post.prompt);
@@ -48,7 +46,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       </div>
       <p className="my-4 font-satoshi text-sm text-black-600">{post.prompt}</p>
       <p 
-      className="font-inter text-sm text-red-500"
+      className="font-inter text-sm cursor-pointer text-red-500"
       onClick={handleTagClick && handleTagClick(post.tag)}
       >{post.tag}</p>
 
